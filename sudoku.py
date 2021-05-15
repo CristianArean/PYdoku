@@ -6,7 +6,9 @@ ANCHO_TABLERO = 9
 ALTO_CUADRANTE = 3
 ANCHO_CUADRANTE = 3
 
-def crear_juego(representacion):
+from random import *
+
+def crear_juego():
     '''
     Dada una representación en cadena de un juego de Sudoku,
     devuelve un juego de Sudoku.
@@ -30,8 +32,12 @@ def crear_juego(representacion):
 
     Donde un 0 significa que la casilla está vacía.
     '''
-    pass
     
+    a = [[randint(0,10) for i in range(ALTO_CUADRANTE)] for j in range(ANCHO_CUADRANTE)]
+    for f in a:
+        print(f)
+
+crear_juego()
 
 def hay_valor_en_fila(sudoku, fila, valor):
     '''
