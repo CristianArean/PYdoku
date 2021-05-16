@@ -8,7 +8,7 @@ ANCHO_CUADRANTE = 3
 
 from random import *
 
-def crear_juego():
+def crear_juego(representacion):
     '''
     Dada una representación en cadena de un juego de Sudoku,
     devuelve un juego de Sudoku.
@@ -32,12 +32,15 @@ def crear_juego():
 
     Donde un 0 significa que la casilla está vacía.
     '''
-    
-    a = [[randint(0,10) for i in range(ALTO_CUADRANTE)] for j in range(ANCHO_CUADRANTE)]
-    for f in a:
-        print(f)
 
-crear_juego()
+    M = []
+    for line in representacion.splitlines():
+        row = []
+        for char in line:
+            row.append(int(char))
+        M.append(row)
+    return M 
+
 
 def hay_valor_en_fila(sudoku, fila, valor):
     '''
@@ -48,7 +51,12 @@ def hay_valor_en_fila(sudoku, fila, valor):
     siguientes celdas:
     (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8)
     '''
-    pass
+    for i in range (ALTO_TABLERO):
+        for j in range (ANCHO_TABLERO):
+            if fila == i and sudoku[i][j] == valor:
+                return True
+    return False        
+
 
 def hay_valor_en_columna(sudoku, columna, valor):
     '''
@@ -59,7 +67,12 @@ def hay_valor_en_columna(sudoku, columna, valor):
     siguientes celdas:
     (0, 3), (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3)
     '''
-    pass
+    for i in range (ALTO_TABLERO):
+        for j in range (ANCHO_TABLERO):
+            if columna == j and sudoku[i][j] == valor:
+                return True
+    return False 
+
 
 def obtener_origen_region(fila, columna):
     '''
@@ -85,7 +98,12 @@ def obtener_origen_region(fila, columna):
     Por ejemplo, para la posición (fila = 1, columna = 4) la función
     deberá devolver (0, 3).
     '''
-    pass
+    for i in range (ALTO_TABLERO):
+        for j in range (ANCHO_TABLERO):
+            if i % 3 == 0 and j % 3 == 0:
+                if (fila - i <= 2) and (columna - j <= 2) and (fila - i >= 0) and (columna - j >= 0):
+                    return (i, j)
+            
 
 def hay_valor_en_region(sudoku, fila, columna, valor):
     '''
@@ -99,7 +117,13 @@ def hay_valor_en_region(sudoku, fila, columna, valor):
     si está `valor` en todas las siguientes celdas:
     (0, 0), (0, 1) (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2).
     '''
-    pass
+    origen_region = obtener_origen_region(fila, columna) 
+    for i in range (origen_region[0], origen_region[0] + ALTO_CUADRANTE):
+        for j in range (origen_region[1], origen_region[1] + ANCHO_CUADRANTE):
+            if sudoku[i][j] == valor:
+                return True
+    return False 
+
 
 def es_movimiento_valido(sudoku, fila, columna, valor):
     '''
@@ -115,7 +139,11 @@ def es_movimiento_valido(sudoku, fila, columna, valor):
     
     No modifica el Sudoku recibido.
     '''
-    pass
+    if not (hay_valor_en_fila(sudoku, fila, valor) 
+        and hay_valor_en_columna(sudoku, columna, valor)
+        and hay_valor_en_region(sudoku, fila, columna, valor)):
+        return True
+    return False
 
 def insertar_valor(sudoku, fila, columna, valor):
     '''
@@ -126,7 +154,16 @@ def insertar_valor(sudoku, fila, columna, valor):
     con el valor cambiado. En caso contrario se devolverá el
     mismo Sudoku que se recibió por parámetro.
     '''
-    pass
+    if es_movimiento_valido(sudoku, fila, columna, valor):
+        new_sudoku = []
+        for i in range (ALTO_TABLERO):
+            row = []
+            for j in range (ANCHO_TABLERO):
+                row.append(sudoku[i][j])
+            new_sudoku.append(row) #copio la matriz
+        new_sudoku[fila][columna] = valor        
+        return new_sudoku 
+    return sudoku
 
 def borrar_valor(sudoku, fila, columna):
     '''
@@ -136,7 +173,15 @@ def borrar_valor(sudoku, fila, columna):
     No modifica el Sudoku recibido por parámetro, devuelve uno
     nuevo con la modificación realizada.
     '''
-    pass
+    new_sudoku = []
+    for i in range (ALTO_TABLERO):
+        row = []
+        for j in range (ANCHO_TABLERO):
+            row.append(sudoku[i][j])
+        new_sudoku.append(row) #copio la matriz
+    new_sudoku[fila][columna] = 0       
+    return new_sudoku 
+       
 
 def esta_terminado(sudoku):
     '''
@@ -148,14 +193,29 @@ def esta_terminado(sudoku):
     (es decir, no hay repetidos en la columna, ni en la fila
     ni en la región).
     '''
-    pass
+    for fila in range(ALTO_TABLERO): #revisa las filas
+        for valor in range(1, 10):
+            if not (hay_valor_en_fila(sudoku, fila, valor)):
+                return False
+    for columna in range(ANCHO_TABLERO): #revisa columna
+        for valor in range(1, 10):
+            if not hay_valor_en_columna(sudoku, columna, valor):
+                return False
+    for valor in range(1, 10): #revisa las regiones
+        for fila in [0, 3, 6]:
+            for columna in [0, 3, 6]:
+                if not hay_valor_en_region(sudoku, fila, columna, valor):
+                    return False
+    return True
 
 def obtener_valor(sudoku, fila, columna):
     '''
     Devuelve el número que se encuentra en la celda (fila, columna)
     o la constante VACIO si no hay ningún número en dicha celda.
     '''
-    pass
+    if sudoku[fila][columna] >0:
+        return sudoku[fila][columna]
+    return VACIO
 
 def hay_movimientos_posibles(sudoku):
     '''
@@ -166,4 +226,8 @@ def hay_movimientos_posibles(sudoku):
     pueda completarse correctamente, sólamente indica que hay
     al menos una posible inserción.
     '''
-    pass
+    for i in range(ALTO_TABLERO):
+        for j in range(ANCHO_TABLERO):
+            if obtener_valor(sudoku, i, j) == VACIO:
+                return True
+    return False
