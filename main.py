@@ -37,32 +37,6 @@ print(main())
 
 
 
-def pedir_variables(): #tiene los if despues de cada variable para que sea mas facil saber que numero estuvo mal
-        while True:
-            valor = int(input('ingrese el valor a insertar[entre 0 y 9]: '))
-            if not valor in range(0,10):
-                return False
-            fila = int(input('indique en la fila que se va a inserta[entre 0 y 9]: '))
-            if not fila in range(0,10):
-                return False
-            columna = int(input('Indique en la columna que se va a insertar el valor[entre 0 y 9]: '))
-            if not columna in range(0,10):
-                return False
-            return True
-        return valor, fila, columna
-
-def main():
-    while not esta_terminado(sudoku) == True:
-        draw_sudoku(sudoku)
-        if hay_movimientos_posibles(sudoku):
-            pedir_variables()
-        insertar_valor(sudoku, fila, columna, valor)
-
-print(main())
-
-
-
-
 
 
 '''
