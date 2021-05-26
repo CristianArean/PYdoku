@@ -10,7 +10,7 @@ def draw_sudoku(sudoku):
             print(sudoku[i][j], end = ' ')
         print('\n')
 
-def variables_a_insertar(): #tiene los if despues de cada variable para que sea mas facil saber que numero estuvo mal
+def pedir_variables(): #tiene los if despues de cada variable para que sea mas facil saber que numero estuvo mal
         while True:
             valor = int(input('ingrese el valor a insertar[entre 0 y 9]: '))
             if not valor in range(0,10):
@@ -24,8 +24,16 @@ def variables_a_insertar(): #tiene los if despues de cada variable para que sea 
             return True
         return valor, fila, columna
 
+def main():
+    draw_sudoku(sudoku)
+    while not esta_terminado(sudoku) == True:
+        if hay_movimientos_posibles(sudoku):
+            pedir_variables()
+        insertar_valor(sudoku, fila, columna, valor):
+        
+print(main())
 
-print(variables_a_insertar())
+
 
 
 
