@@ -51,10 +51,9 @@ def hay_valor_en_fila(sudoku, fila, valor):
     siguientes celdas:
     (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8)
     '''
-    for i in range (ALTO_TABLERO):
-        for j in range (ANCHO_TABLERO):
-            if fila == i and sudoku[i][j] == valor:
-                return True
+    for i in range (ANCHO_TABLERO):
+        if sudoku[fila][i] == valor:
+            return True
     return False        
 
 
@@ -67,11 +66,10 @@ def hay_valor_en_columna(sudoku, columna, valor):
     siguientes celdas:
     (0, 3), (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3)
     '''
-    for i in range (ALTO_TABLERO):
-        for j in range (ANCHO_TABLERO):
-            if columna == j and sudoku[i][j] == valor:
-                return True
-    return False 
+    for j in range (ALTO_TABLERO):
+        if sudoku[j][columna] == valor:
+            return True
+    return False    
 
 
 def obtener_origen_region(fila, columna):
@@ -162,7 +160,7 @@ def insertar_valor(sudoku, fila, columna, valor):
                 row.append(sudoku[i][j])
             new_sudoku.append(row) #copio la matriz
         new_sudoku[fila][columna] = valor        
-        return new_sudoku 
+        return new_sudoku
     return sudoku
 
 def borrar_valor(sudoku, fila, columna):

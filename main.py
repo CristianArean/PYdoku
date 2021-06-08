@@ -3,7 +3,8 @@ from mapas import *
 from sudoku import *
 
 def draw_sudoku(sudoku):
-    print(' ', 'A', 'B', 'C', '  D', 'E', 'F', '  G', 'H', 'I', '    FI|LA')
+    abecedario = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'].split(',')
+    print(abecedario[:ANCHO_TABLERO], '    FI|LA')
     for  i in range(ALTO_TABLERO):
         if i % 3 == 0:
                 print('-' * 25) 
@@ -16,30 +17,31 @@ def draw_sudoku(sudoku):
     print('-'*25)
 
 def agregar_variables(): #tiene los if despues de cada variable para que sea mas facil saber que numero estuvo mal
-    valor = int(input('ingrese el valor a insertar[entre 0 y 9]: ')) 
-    fila = int(input('indique en la fila que se va a inserta[entre 1 y 9]: ')) - 1
-    columna = input('Indique en la columna que se va a insertar el valor: ').lower()
-    if columna == 'a':
-         columna = 0
-    elif columna == 'b':
-         columna = 1
-    elif columna == 'c':
-         columna = 2
-    elif columna == 'c':
-         columna = 3
-    elif columna == 'd':
-         columna = 4
-    elif columna == 'e':
-         columna = 5
-    elif columna == 'f':
-         columna = 6 
-    elif columna == 'g':
-         columna = 7
-    elif columna == 'h':
-         columna = 8 
-    elif columna == 'i':
-         columna = 9  
-    return valor, fila, columna
+     while True:
+          valor = input('ingrese el valor a insertar[entre 0 y 9]: ') 
+          fila = input('indique en la fila que se va a inserta[entre 1 y 9]: ')
+          columna = input('Indique en la columna que se va a insertar el valor: ').lower()
+          if columna == 'a':
+              columna = 0
+          elif columna == 'b':
+               columna = 1
+          elif columna == 'c':
+               columna = 2
+          elif columna == 'c':
+               columna = 3
+          elif columna == 'd':
+               columna = 4
+          elif columna == 'e':
+               columna = 5
+          elif columna == 'f':
+               columna = 6 
+          elif columna == 'g':
+               columna = 7
+          elif columna == 'h':
+               columna = 8 
+          elif columna == 'i':
+               columna = 9 
+     return valor, fila, columna
 
 def borrador():
     fila = int(input('indique en la fila que se va a borrar: ')) - 1
