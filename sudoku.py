@@ -192,7 +192,6 @@ def esta_terminado(sudoku):
     '''
     for fila in range(ALTO_TABLERO):
         for columna in range(ANCHO_TABLERO):
-         #revisa las filas
             for valor in range(1, 10):
                 if not hay_valor_en_fila(sudoku, fila, valor) or not hay_valor_en_columna(sudoku, columna, valor) or not hay_valor_en_region(sudoku, fila, columna, valor):
                     return False
