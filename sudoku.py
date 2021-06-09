@@ -143,6 +143,15 @@ def es_movimiento_valido(sudoku, fila, columna, valor):
         return True
     return False
 
+def copiar_matriz(sudoku):
+    new_sudoku = []
+    for i in range (ALTO_TABLERO):
+            row = []
+            for j in range (ANCHO_TABLERO):
+                row.append(sudoku[i][j])
+            new_sudoku.append(row)
+    return new_sudoku        
+
 def insertar_valor(sudoku, fila, columna, valor):
     '''
     Intenta insertar el valor de la celda en la posición 
@@ -153,12 +162,7 @@ def insertar_valor(sudoku, fila, columna, valor):
     mismo Sudoku que se recibió por parámetro.
     '''
     if es_movimiento_valido(sudoku, fila, columna, valor):
-        new_sudoku = []
-        for i in range (ALTO_TABLERO):
-            row = []
-            for j in range (ANCHO_TABLERO):
-                row.append(sudoku[i][j])
-            new_sudoku.append(row) #copio la matriz
+        new_sudoku = copiar_matriz(sudoku) #copio la matriz
         new_sudoku[fila][columna] = valor        
         return new_sudoku
     return sudoku
@@ -171,12 +175,7 @@ def borrar_valor(sudoku, fila, columna):
     No modifica el Sudoku recibido por parámetro, devuelve uno
     nuevo con la modificación realizada.
     '''
-    new_sudoku = []
-    for i in range (ALTO_TABLERO):
-        row = []
-        for j in range (ANCHO_TABLERO):
-            row.append(sudoku[i][j])
-        new_sudoku.append(row) #copio la matriz
+    new_sudoku = copiar_matriz(sudoku) 
     new_sudoku[fila][columna] = 0       
     return new_sudoku 
        
