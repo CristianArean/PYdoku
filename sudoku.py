@@ -190,18 +190,11 @@ def esta_terminado(sudoku):
     (es decir, no hay repetidos en la columna, ni en la fila
     ni en la región).
     '''
-    for fila in range(ALTO_TABLERO): #revisa las filas
-        for valor in range(1, 10):
-            if not (hay_valor_en_fila(sudoku, fila, valor)):
-                return False
-    for columna in range(ANCHO_TABLERO): #revisa columna
-        for valor in range(1, 10):
-            if not hay_valor_en_columna(sudoku, columna, valor):
-                return False
-    for valor in range(1, 10): #revisa las regiones
-        for fila in [0, 3, 6]:
-            for columna in [0, 3, 6]:
-                if not hay_valor_en_region(sudoku, fila, columna, valor):
+    for fila in range(ALTO_TABLERO):
+        for columna in range(ANCHO_TABLERO):
+         #revisa las filas
+            for valor in range(1, 10):
+                if not hay_valor_en_fila(sudoku, fila, valor) or not hay_valor_en_columna(sudoku, columna, valor) or not hay_valor_en_region(sudoku, fila, columna, valor):
                     return False
     return True
 
