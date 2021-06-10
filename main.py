@@ -3,22 +3,23 @@ from mapas import *
 from sudoku import *
 
 def draw_sudoku(sudoku):
-     abecedario = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-     #abecedario = ' '.join(abecedario)
-
-
-
-     print('', abecedario[:ANCHO_TABLERO], '    FI|LA')
-     for  i in range(ALTO_TABLERO):
-          if i % 3 == 0:
-                    print('-' * 25) 
-          for j in range(ANCHO_TABLERO):
-               if j % 3 == 0:
-                    print('|', end= ' ' )
-               print(sudoku[i][j], end=' ')
-          print('|    ', i+1)
-          print('', ' ')
-     print('-'*25)
+    abecedario = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
+    i = 0
+    while(i < ANCHO_TABLERO):
+        if i % 3 == 0:
+            print(' ', end = " " )
+        print(abecedario[i], end = ' ' )
+        i+=1    
+    for  i in range(ALTO_TABLERO):
+        if i % 3 == 0:
+            print("\n",'-' * 25) 
+        for j in range(ANCHO_TABLERO):
+           if j % 3 == 0:
+                print('|', end= ' ' )
+           print(sudoku[i][j], end=' ')
+        print('|    ', i+1)
+        print('', ' ')
+    print('-'*25)
 
 def agregar_variables():
     valor = input('ingrese el valor a insertar[entre 1 y 9]: ')    
@@ -29,42 +30,30 @@ def agregar_variables():
     while not fila.isdigit():
       fila = input('Ingreso un valor erroneo, Ingrese la fila en la que va insertar: ')
     fila = int(fila) -1
-    columna = input('Indique en la columna que se va a insertar el valor: ')
+    columna = input('Indique en la columna que se va a insertar el valor: ').upper()
     letras_col = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ]
-    ncol = 0
-
+    while not columna in letras_col:
+        columna = input('Ingreso algo erroneo, Indique en la columna que se va a borrar el valor: ').upper()
+    numero_columna = 0
     for i in range(len(letras_col)):
         if columna == letras_col[i]:
-            ncol = i
-    return valor, fila, ncol
+            numero_columna = i
+    return valor, fila, numero_columna
 
 def borrador():
     fila = (input('indique en la fila que se va a borrar: '))
     while not fila.isdigit():
         fila = input('Ingreso un valor erroneo, Ingrese la fila en la que va insertar: ')
     fila = int(fila) -1
-    columna = input('Indique en la columna que se va a borrar el valor: ').lower()
-    if columna == 'a':
-        columna = 0
-    elif columna == 'b':
-        columna = 1
-    elif columna == 'c':
-        columna = 2
-    elif columna == 'c':
-        columna = 3
-    elif columna == 'd':
-        columna = 4
-    elif columna == 'e':
-        columna = 5
-    elif columna == 'f':
-        columna = 6 
-    elif columna == 'g':
-        columna = 7
-    elif columna == 'h':
-        columna = 8 
-    elif columna == 'i':
-        columna = 9  
-    return fila, columna
+    columna = input('Indique en la columna que se va a borrar el valor: ').upper()
+    letras_col = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ]
+    while not columna in letras_col:
+        columna = input('Ingreso algo erroneo, Indique en la columna que se va a borrar el valor: ').upper()
+    numero_columna = 0
+    for i in range(len(letras_col)):
+        if columna == letras_col[i]:
+            numero_columna = i
+    return fila, numero_columna
 
 def main():
     MAPA = MAPAS[randint(0, 49)]
@@ -80,7 +69,7 @@ def main():
 |_______/ |______/|________/|__/  \__/    \_/    |________/|__/  \__/|______/|_______/  \______/ 
                                                                                                  
                                                                                                 
-                        release note: Removed Herobraine 
+                        release note: Removed Herobrine 
         ''')
     while not esta_terminado(sudoku) == True:
         draw_sudoku(sudoku)
@@ -110,7 +99,7 @@ def main():
  \______/ |__/  |__/|__/  \__/|__/  |__/ \______/    |__/   |________/|__/|__/
                                                                               
         ''')
-    Not_Herobraine = input('')
+    Not_Herobrine = input('')
     if Not_Herobraine == '':
         print('''\
                  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&,              

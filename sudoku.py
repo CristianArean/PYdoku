@@ -96,11 +96,24 @@ def obtener_origen_region(fila, columna):
     Por ejemplo, para la posición (fila = 1, columna = 4) la función
     deberá devolver (0, 3).
     '''
-    for i in range (ALTO_TABLERO):
-        for j in range (ANCHO_TABLERO):
-            if i % 3 == 0 and j % 3 == 0:
-                if (fila - i <= 2) and (columna - j <= 2) and (fila - i >= 0) and (columna - j >= 0):
-                    return (i, j)
+    i = None
+    j = None
+    if fila >= 0 and fila < 3:
+        i = 0
+    elif fila >= 3 and fila < 6:
+        i = 3
+    elif fila >= 6 and fila < 9:
+        i = 6
+
+
+    if columna >= 0 and columna < 3:
+        j = 0
+    elif columna >= 3 and columna < 6:
+        j = 3
+    elif columna >= 6 and columna < 9:
+        j = 6
+    return i, j
+
             
 
 def hay_valor_en_region(sudoku, fila, columna, valor):
